@@ -1,28 +1,131 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Put your description here.">
-  <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Example</title>
+    <style>
+        /* Styles for the button container */
+        .button-container {
+            text-align: center;
+            margin: 20px;
+        }
 
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background-color: #ededed;
-    }
-  </style>
-  <title>my-card</title>
+        /* Styles for the card container */
+        .card {
+            width: 300px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Styles for the card header */
+        .card-header {
+            font-size: 24px;
+            color: black;
+        }
+
+        /* Styles for the card image */
+        .card-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Styles for the card text */
+        .card-text {
+            font-size: 16px;
+        }
+
+        /* Styles for the hidden textbox */
+        .hidden-textbox {
+            display: none;
+        }
+
+        /* Button styles (customize as needed) */
+        button {
+            background-color: #e0218a;
+            color: pink;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
-  <my-card></my-card>
+    <div class="button-container">
+        <button class="toggle-button">Toggle</button>
+        <button class="duplicate-button">Duplicate</button>
+        <button class="delete-button">Delete</button>
+        <button class="details-button">Details</button>
+        <button class="rename-button">Rename</button>
+    </div>
 
-  <script type="module" src="./out-tsc/src/my-card.js"></script>
+    <div class="card">
+        <h2 class="card-header">Barbie</h2>
+        <div class="card-content">
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRiaMsHYpdf80moiUHsYEMWN_RR2O0jagD3Nu73-5VBYYrm3uCN" alt="Card Image" class="card-image">
+            <p class="card-text">Cool movie!</p>
+            <div class="hidden-textbox">
+                <p>Go watch the movie maybe</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const card = document.querySelector(".card");
+            const cardHeader = document.querySelector(".card-header");
+            const toggleButton = document.querySelector(".toggle-button");
+            const duplicateButton = document.querySelector(".duplicate-button");
+            const deleteButton = document.querySelector(".delete-button");
+            const detailsButton = document.querySelector(".details-button");
+            const renameButton = document.querySelector(".rename-button");
+            const hiddenTextbox = document.querySelector(".hidden-textbox");
+
+            let cardCounter = 1;
+
+            toggleButton.addEventListener("click", () => {
+                card.style.backgroundColor = card.style.backgroundColor === "lightpink" ? "" : "lightpink";
+                cardHeader.style.color = cardHeader.style.color === "hotpink" ? "" : "hotpink";
+            });
+
+            duplicateButton.addEventListener("click", () => {
+                const clonedCard = card.cloneNode(true);
+                card.parentNode.insertBefore(clonedCard, card.nextSibling);
+                cardCounter++;
+                cardHeader.textContent = `Card Header ${cardCounter}`;
+            });
+
+            deleteButton.addEventListener("click", () => {
+                if (cardCounter > 1) {
+                    card.remove();
+                    cardCounter--;
+                }
+            });
+
+            detailsButton.addEventListener("click", () => {
+                hiddenTextbox.style.display = hiddenTextbox.style.display === "none" ? "block" : "none";
+            });
+
+            renameButton.addEventListener("click", () => {
+                const newHeader = prompt("Enter a new header for the card:");
+                if (newHeader !== null && newHeader !== "") {
+                    cardHeader.textContent = newHeader;
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
